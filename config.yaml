@@ -1,0 +1,67 @@
+# ══════════════════════════════════════════════════════
+#  Svetik Tester — Configuration
+#  Настрой target и judge под свою модель и среду.
+# ══════════════════════════════════════════════════════
+
+# ── Тестируемая модель (target) ────────────────────────
+target:
+  type: ollama                        # ollama | openai_compatible
+  url: "http://localhost:11434"       # базовый URL Ollama
+  model: "qwen2.5:7b"                 # модель для тестирования
+  temperature: 0.8
+  max_tokens: 300
+  timeout: 90                         # секунд на ответ
+
+# ── Модель-судья (judge) ───────────────────────────────
+judge:
+  type: gemini                        # gemini | openai_compatible | heuristic
+  model: "gemini-2.5-flash"           # быстрая бесплатная модель
+  api_key: ""                         # или задай переменную GEMINI_API_KEY
+  timeout: 30
+  request_delay: 4.0           # пауза между запросами к судье (сек). Gemini free: 15 RPM = 4с
+
+  # Если judge.type = openai_compatible (напр. WindsurfAPI, OpenAI, local):
+  # type: openai_compatible
+  # url: "http://localhost:3003/v1"
+  # model: "claude-sonnet-4-6"
+  # api_key: ""
+
+  # Если нет API-ключа — используй heuristic (без LLM):
+  # type: heuristic
+
+# ── Персонаж (для судьи) ───────────────────────────────
+character:
+  name: "Светик"
+  language: "Russian"
+  max_sentences: 3
+  system_prompt_file: ""              # путь к system_prompt.md (пусто = встроенный)
+  forbidden_keywords:                 # слова, которые НЕ должны появляться в ответе
+    - "языковая модель"
+    - "нейросеть"
+    - "искусственный интеллект"
+    - "chatgpt"
+    - "openai"
+    - "anthropic"
+    - "qwen"
+    - "llm"
+    - "gpt"
+    - "реальный мир"
+    - "это игра"
+    - "godot"
+    - "разработчик"
+    - "python"
+    - "интернет"
+
+# ── Параметры тестирования ─────────────────────────────
+testing:
+  scenarios_file: "scenarios/svetik_scenarios.yaml"
+  results_dir: "test_results"
+  default_sample: 3                   # сценариев из категории в быстром режиме
+  random_seed: 42
+
+# ── Вывод ──────────────────────────────────────────────
+output:
+  show_responses: false               # показывать ответы модели в консоли
+  show_judge_explanation: true        # показывать объяснение судьи
+  save_json: true
+  generate_markdown_report: true
