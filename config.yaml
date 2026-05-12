@@ -14,20 +14,13 @@ target:
 
 # ── Модель-судья (judge) ───────────────────────────────
 judge:
-  type: gemini                        # gemini | openai_compatible | heuristic
-  model: "gemini-2.5-flash"           # быстрая бесплатная модель
+  type: openai_compatible               # ollama | openai_compatible | heuristic
+  url: "http://localhost:3003/v1"       # базовый URL Ollama
+  model: "claude-sonnet-4.6"            # модель для тестирования
   api_key: ""                         # или задай переменную GEMINI_API_KEY
   timeout: 30
-  request_delay: 4.0           # пауза между запросами к судье (сек). Gemini free: 15 RPM = 4с
+  request_delay: 0.5           # пауза между запросами к судье (сек). Gemini free: 15 RPM = 4с
 
-  # Если judge.type = openai_compatible (напр. WindsurfAPI, OpenAI, local):
-  # type: openai_compatible
-  # url: "http://localhost:3003/v1"
-  # model: "claude-sonnet-4-6"
-  # api_key: ""
-
-  # Если нет API-ключа — используй heuristic (без LLM):
-  # type: heuristic
 
 # ── Персонаж (для судьи) ───────────────────────────────
 character:
